@@ -7,12 +7,30 @@
         <thead>
           <tr>
             <th
-              class="text-left text-body-2 text--primary font-weight-bold pl-0 pr-0 pt-2 pb-2 ml-2 mr-2"
+              class="
+                text-left text-body-2 text--primary
+                font-weight-bold
+                pl-0
+                pr-0
+                pt-2
+                pb-2
+                ml-2
+                mr-2
+              "
             >
               Issuer
             </th>
             <th
-              class="text-left text-body-2 text--primary font-weight-bold pl-0 pr-0 pt-2 pb-2 ml-2 mr-2"
+              class="
+                text-left text-body-2 text--primary
+                font-weight-bold
+                pl-0
+                pr-0
+                pt-2
+                pb-2
+                ml-2
+                mr-2
+              "
             >
               Credentials
             </th>
@@ -50,7 +68,6 @@
 <script lang="ts">
 import i18n from "@/i18n";
 import { ICredentialType } from "@/interfaces/api/v2/credential-type.interface";
-import { unwrapTranslations } from "@/utils/entity";
 import { Component, Vue } from "vue-property-decorator";
 import { mapGetters } from "vuex";
 
@@ -62,10 +79,7 @@ import { mapGetters } from "vuex";
 export default class OrgBookData extends Vue {
   formattedDescription(type: ICredentialType): string {
     return (
-      // TODO: change to type.schema_label?.[i18n.locale]?.description after update to backend
-      unwrapTranslations(type.schema_label)?.[i18n.locale]?.description ||
-      type?.description ||
-      ""
+      type.schema_label?.[i18n.locale]?.description || type?.description || ""
     );
   }
 }

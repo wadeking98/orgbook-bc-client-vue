@@ -126,7 +126,6 @@ import router from "@/router";
 import { ICredentialType } from "@/interfaces/api/v2/credential-type.interface";
 import { IContactRequest } from "@/interfaces/api/v4/contact.interface";
 import { contactReason } from "@/store/modules/contact";
-import { unwrapTranslations } from "@/utils/entity";
 
 interface Data {
   formData: IContactRequest;
@@ -185,10 +184,9 @@ export default class ContactForm extends Vue {
 
   get formattedCredentialTypes(): Array<{ text: string; value: number }> {
     return this.credentialTypes.map((type) => ({
-      // TODO: remove unwrap translations functions after backend update
-      text: unwrapTranslations(type.schema_label)?.[this.$i18n.locale]?.label
+      text: type.schema_label?.[this.$i18n.locale]?.label
         ? (
-            unwrapTranslations(type.schema_label) as Record<
+            type.schema_label as Record<
               string,
               { label: string; description: string }
             >

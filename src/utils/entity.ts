@@ -4,7 +4,6 @@ import {
   ICredential,
   ICredentialDisplayType,
   ICredentialAttribute,
-  ISchemaLabel,
 } from "@/interfaces/api/v4/credential.interface";
 import { IEntityFilter } from "@/interfaces/entity-filter.interface";
 import { selectFirstAttrItem } from "@/utils/attribute";
@@ -55,22 +54,6 @@ export function getRelationshipIssuer(
   )?.credential_type?.issuer;
 }
 
-// TODO: remove after backend update
-export function unwrapTranslations(
-  label:
-    | ISchemaLabel
-    | Record<string, { label: string; description: string }>
-    | undefined
-): Record<string, { label: string; description: string }> | undefined {
-  if (label?.translations) {
-    return label.translations as
-      | Record<string, { label: string; description: string }>
-      | undefined;
-  }
-  return label as
-    | Record<string, { label: string; description: string }>
-    | undefined;
-}
 
 export function credOrRelationshipToDisplay(
   item: ICredential | IRelationship,
@@ -105,10 +88,7 @@ export function credOrRelationshipToDisplay(
     display.revoked = credItem.revoked;
     display.revoked_date = credItem.revoked_date;
     display.value = credItem.names[0]?.text;
-    // TODO: remove unwrap func after backend update
-    display.schema_label = unwrapTranslations(
-      credItem.credential_type.schema_label
-    );
+    display.schema_label = credItem.credential_type.schema_label;
     display.highlighted_attributes = getHighlightedAttributes(
       credItem,
       credItem.credential_type.credential_title,
@@ -140,10 +120,7 @@ export function credOrRelationshipToDisplay(
     display.revoked_date = relItem.credential.revoked_date;
     display.relationship_types = relItem.attributes.map((attr) => attr.value);
     display.value = getRelationshipName(relItem);
-    // TODO: remove unwrap func after backend update
-    display.schema_label = unwrapTranslations(
-      relItem.credential.credential_type.schema_label
-    );
+    display.schema_label = relItem.credential.credential_type.schema_label;
     display.highlighted_attributes = getHighlightedAttributes(
       relItem,
       relItem.credential.credential_type.credential_title,
